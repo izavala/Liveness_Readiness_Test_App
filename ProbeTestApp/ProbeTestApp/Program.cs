@@ -1,5 +1,6 @@
 ﻿using Akka.Actor;
 using Akka.Configuration;
+using Akka.HealthCheck;
 using System;
 
 namespace ProbeTestApp
@@ -22,7 +23,7 @@ namespace ProbeTestApp
                  }}";
             var config = ConfigurationFactory.ParseString(hocon);
             var actorSystem = ActorSystem.Create("Probe", config);
-
+            var healthCheck = AkkaHealthCheck.For(actorSystem);
             actorSystem.WhenTerminated.Wait();
         }
     }
